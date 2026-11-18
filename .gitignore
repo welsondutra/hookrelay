@@ -1,0 +1,21 @@
+# dependencies and build output
+node_modules/
+dist/
+coverage/
+
+# environment
+.env
+.env.*
+!.env.example
+
+# logs and OS files
+*.log
+.DS_Store
+
+# editor and tooling
+.idea/
+.vscode/
+.claude/
+AGENTS.md
+CLAUDE.md
+*.tsbuildinfo
