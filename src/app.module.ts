@@ -4,10 +4,11 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { validateEnv } from './config/env.validation.js';
 import { EndpointsModule } from './endpoints/endpoints.module.js';
+import { EventsModule } from './events/events.module.js';
 import { DatabaseModule } from './database/database.module.js';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true, validate: validateEnv }), DatabaseModule, EndpointsModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true, validate: validateEnv }), DatabaseModule, EndpointsModule, EventsModule],
   controllers: [AppController],
   providers: [AppService],
 })
