@@ -5,6 +5,9 @@ export interface Env {
   DATABASE_USER: string;
   DATABASE_PASSWORD: string;
   DATABASE_NAME: string;
+  DELIVERY_POLL_INTERVAL_MS: number;
+  DELIVERY_BASE_DELAY_MS: number;
+  DELIVERY_MAX_ATTEMPTS: number;
 }
 
 function readPort(value: unknown, name: string, fallback: number): number {
@@ -14,6 +17,15 @@ function readPort(value: unknown, name: string, fallback: number): number {
     throw new Error(`${name} must be a valid port number, received ${JSON.stringify(value)}`);
   }
   return port;
+}
+
+function readPositiveInt(value: unknown, name: string, fallback: number): number {
+  if (value === undefined || value === '') return fallback;
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    throw new Error(`${name} must be a positive integer, received ${JSON.stringify(value)}`);
+  }
+  return parsed;
 }
 
 function readString(value: unknown, name: string, fallback?: string): string {
@@ -30,5 +42,8 @@ export function validateEnv(config: Record<string, unknown>): Env {
     DATABASE_USER: readString(config.DATABASE_USER, 'DATABASE_USER', 'hookrelay'),
     DATABASE_PASSWORD: readString(config.DATABASE_PASSWORD, 'DATABASE_PASSWORD'),
     DATABASE_NAME: readString(config.DATABASE_NAME, 'DATABASE_NAME', 'hookrelay'),
+    DELIVERY_POLL_INTERVAL_MS: readPositiveInt(config.DELIVERY_POLL_INTERVAL_MS, 'DELIVERY_POLL_INTERVAL_MS', 2000),
+    DELIVERY_BASE_DELAY_MS: readPositiveInt(config.DELIVERY_BASE_DELAY_MS, 'DELIVERY_BASE_DELAY_MS', 30000),
+    DELIVERY_MAX_ATTEMPTS: readPositiveInt(config.DELIVERY_MAX_ATTEMPTS, 'DELIVERY_MAX_ATTEMPTS', 6),
   };
 }

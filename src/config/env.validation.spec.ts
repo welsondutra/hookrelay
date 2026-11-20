@@ -16,4 +16,15 @@ describe('validateEnv', () => {
     expect(() => validateEnv({ DATABASE_PASSWORD: 'x', PORT: 'abc' })).toThrow('PORT must be a valid port');
     expect(() => validateEnv({ DATABASE_PASSWORD: 'x', DATABASE_PORT: '70000' })).toThrow('DATABASE_PORT');
   });
+
+  it('exposes delivery tuning with sensible defaults', () => {
+    const env = validateEnv({ DATABASE_PASSWORD: 'secret' });
+    expect(env.DELIVERY_POLL_INTERVAL_MS).toBe(2000);
+    expect(env.DELIVERY_BASE_DELAY_MS).toBe(30000);
+    expect(env.DELIVERY_MAX_ATTEMPTS).toBe(6);
+  });
+
+  it('rejects non-positive delivery settings', () => {
+    expect(() => validateEnv({ DATABASE_PASSWORD: 'x', DELIVERY_MAX_ATTEMPTS: '0' })).toThrow('DELIVERY_MAX_ATTEMPTS');
+  });
 });
