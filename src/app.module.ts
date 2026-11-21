@@ -3,12 +3,13 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { validateEnv } from './config/env.validation.js';
+import { DeliveriesModule } from './deliveries/deliveries.module.js';
 import { EndpointsModule } from './endpoints/endpoints.module.js';
 import { EventsModule } from './events/events.module.js';
 import { DatabaseModule } from './database/database.module.js';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true, validate: validateEnv }), DatabaseModule, EndpointsModule, EventsModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true, validate: validateEnv }), DatabaseModule, EndpointsModule, EventsModule, DeliveriesModule],
   controllers: [AppController],
   providers: [AppService],
 })
