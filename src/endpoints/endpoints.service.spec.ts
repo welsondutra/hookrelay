@@ -10,6 +10,7 @@ function makeEndpoint(overrides: Partial<Endpoint> = {}): Endpoint {
     url: 'https://example.com/hook',
     secret: 'whsec_test',
     description: 'original',
+    eventTypes: [],
     enabled: true,
     createdAt: new Date(0),
     updatedAt: new Date(0),

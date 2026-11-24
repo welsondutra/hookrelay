@@ -14,6 +14,10 @@ export class Endpoint {
   @Column({ type: 'text', nullable: true })
   description!: string | null;
 
+  /** Event types this endpoint subscribes to. Empty means every event. */
+  @Column({ type: 'text', array: true, default: () => "'{}'" })
+  eventTypes!: string[];
+
   @Column({ type: 'boolean', default: true })
   enabled!: boolean;
 

@@ -5,6 +5,7 @@ import type { Env } from '../config/env.validation.js';
 import { Delivery } from '../deliveries/delivery.entity.js';
 import { Endpoint } from '../endpoints/endpoint.entity.js';
 import { Event } from '../events/event.entity.js';
+import { AddEndpointEventTypes1763500000000 } from './migrations/1763500000000-AddEndpointEventTypes.js';
 import { CreateEndpoints1763400000000 } from './migrations/1763400000000-CreateEndpoints.js';
 import { CreateEventsAndDeliveries1763400100000 } from './migrations/1763400100000-CreateEventsAndDeliveries.js';
 
@@ -20,7 +21,11 @@ import { CreateEventsAndDeliveries1763400100000 } from './migrations/17634001000
         password: config.get('DATABASE_PASSWORD', { infer: true }),
         database: config.get('DATABASE_NAME', { infer: true }),
         entities: [Endpoint, Event, Delivery],
-        migrations: [CreateEndpoints1763400000000, CreateEventsAndDeliveries1763400100000],
+        migrations: [
+          CreateEndpoints1763400000000,
+          CreateEventsAndDeliveries1763400100000,
+          AddEndpointEventTypes1763500000000,
+        ],
         migrationsRun: true,
         synchronize: false,
       }),
