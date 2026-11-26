@@ -25,6 +25,7 @@ export class EndpointsService {
     const endpoint = this.repository.create({
       url: dto.url,
       description: dto.description ?? null,
+      eventTypes: dto.eventTypes ?? [],
       secret: generateSecret(),
     });
     return this.repository.save(endpoint);

@@ -1,3 +1,6 @@
+/** Accepted shapes for a subscription pattern: `*`, `name`, `name.sub` or `name.*`. */
+export const EVENT_TYPE_PATTERN = /^(\*|[a-z0-9][a-z0-9_.-]*(\.\*)?)$/i;
+
 /**
  * Decides whether an endpoint should receive an event type.
  *
