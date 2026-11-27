@@ -1,7 +1,7 @@
 import type { DataSource, EntityManager } from 'typeorm';
 import { EventsService } from './events.service.js';
 
-function makeService(enabledEndpoints: number) {
+function makeService(enabledEndpoints: number, eventTypes: string[][] = []) {
   const saved: unknown[] = [];
   const manager = {
     create: (_entity: unknown, data: Record<string, unknown>) => ({ ...data, id: `id-${saved.length}` }),
@@ -9,7 +9,7 @@ function makeService(enabledEndpoints: number) {
       saved.push(value);
       return Array.isArray(value) ? value : { ...(value as object), id: 'event-1' };
     },
-    findBy: async () => Array.from({ length: enabledEndpoints }, (_, i) => ({ id: `endpoint-${i}` })),
+    findBy: async () => Array.from({ length: enabledEndpoints }, (_, i) => ({ id: `endpoint-${i}`, eventTypes: eventTypes[i] ?? [] })),
   } as unknown as EntityManager;
   const dataSource = { transaction: async (work: (m: EntityManager) => unknown) => work(manager) } as unknown as DataSource;
   return { service: new EventsService(dataSource), saved };
